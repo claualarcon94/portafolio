@@ -1,0 +1,10 @@
+# Carpeta con proyectos originales de Processing (no se suben)
+Processing Projects/
+
+# Archivo temporal de logs
+consola.txt
+otros.txt
+
+# Dependencias y directorios del sistema
+.DS_Store
+Thumbs.db
