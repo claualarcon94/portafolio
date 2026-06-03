@@ -12,7 +12,8 @@ var flowFieldSketch = function(p) {
     var ancho = contenedor ? contenedor.clientWidth : 560;
     var alto = contenedor ? contenedor.clientHeight : 350;
     p.createCanvas(ancho, alto);
-    p.background(25);
+    p.heroMode = contenedor === document.getElementById('hero-flow-field');
+    if (!p.heroMode) p.background(25);
 
     p.inc = 0.1;
     p.scl = 20;
@@ -75,7 +76,7 @@ var flowFieldSketch = function(p) {
   /* Reinicia las partículas al hacer clic dentro del canvas */
   p.mousePressed = function() {
     if (p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) return;
-    p.background(25);
+    if (p.heroMode) { p.clear(); } else { p.background(25); }
     p.particles = [];
     for (var i = 0; i < 400; i++) p.particles[i] = new Particle(p);
   };
