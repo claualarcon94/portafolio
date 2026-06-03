@@ -14,7 +14,7 @@ var marchingSquaresSketch = function(p) {
   /* Toggles visuales */
   var grid = false;
   var balls = true;
-  var inter = false;
+  var inter = true;
   var rec = false;
 
   /* Índices de esquinas para cada arista de una celda */
@@ -28,30 +28,6 @@ var marchingSquaresSketch = function(p) {
     {x: 0, y: 1}
   ];
 
-  /* Metaball que genera influencia en el campo escalar */
-  function Bubble(x, y) {
-    this.r = p.random(10, 100);
-    this.x = x !== undefined ? x : p.random(this.r, p.width - this.r);
-    this.y = y !== undefined ? y : p.random(this.r, p.height - this.r);
-    this.vx = p.random(-2, 2);
-    this.vy = p.random(-2, 2);
-  }
-
-  Bubble.prototype.show = function() {
-    p.noFill();
-    p.stroke(255);
-    p.strokeWeight(1);
-    p.fill('#2E94E5');
-    p.circle(this.x, this.y, this.r * 2);
-  };
-
-  Bubble.prototype.update = function() {
-    this.x += this.vx;
-    this.y += this.vy;
-    if (this.x > p.width - this.r || this.x < this.r) this.vx *= -1;
-    if (this.y > p.height - this.r || this.y < this.r) this.vy *= -1;
-  };
-
   /* Configuración: canvas, grilla del campo y burbujas iniciales */
   p.setup = function() {
     var contenedor = document.getElementById('p5-canvas');
@@ -63,7 +39,7 @@ var marchingSquaresSketch = function(p) {
     rows = Math.floor(p.height / res) + 1;
     Field = new Array(rows);
     for (var i = 0; i < rows; i++) Field[i] = new Array(cols);
-    for (var i = 0; i < 16; i++) bubbles.push(new Bubble());
+    for (var i = 0; i < 16; i++) bubbles.push(new Bubble(p));
   };
 
   /* Bucle principal: calcula el campo, dibuja contornos y metaballs */
@@ -168,7 +144,7 @@ var marchingSquaresSketch = function(p) {
   /* Mouse: clic izquierdo agrega burbuja, derecho la elimina */
   p.mousePressed = function() {
     if (p.mouseButton === p.LEFT) {
-      bubbles.push(new Bubble(p.mouseX, p.mouseY));
+      bubbles.push(new Bubble(p, p.mouseX, p.mouseY));
     } else if (p.mouseButton === p.RIGHT) {
       if (bubbles.length > 1) bubbles.shift();
     }

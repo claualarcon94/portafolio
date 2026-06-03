@@ -179,24 +179,18 @@ const projects = [
     color: 'cat-algorithms'
   },
   {
-    id: 'perceptron_process',
-    title: 'Perceptron Process',
-    category: 'ml',
-    subtitle: 'Batch Training Perceptron',
-    description: 'Perceptrón de una capa entrenado en 100 puntos aleatorios con aprendizaje por lotes. Visualiza clasificación con puntos verdes (correctos) y rojos (incorrectos).',
-    tags: ['Processing', 'Perceptron', 'Batch learning', 'Classification'],
-    icon: 'Pp',
-    color: 'cat-ml'
-  },
-  {
-    id: 'perceptron_solo',
-    title: 'Perceptron Solo',
+    id: 'perceptron',
+    title: 'Perceptron',
     category: 'ml',
     subtitle: 'Animated Perceptron Training',
-    description: 'Perceptrón con entrenamiento animado punto por punto sobre 1000 muestras. Muestra la frontera de decisión evolucionando en tiempo real.',
-    tags: ['Processing', 'Perceptron', 'Online learning', 'Decision boundary'],
-    icon: 'Ps',
-    color: 'cat-ml'
+    description: 'Perceptrón de una capa entrenado por lotes sobre 1000 puntos aleatorios. La frontera de decisión evoluciona en tiempo real hasta clasificar correctamente todos los puntos. Después del entrenamiento, haz clic para agregar nuevos puntos y ver cómo los clasifica.',
+    tags: ['p5.js', 'Perceptron', 'Online learning', 'Decision boundary'],
+    icon: 'P',
+    color: 'cat-ml',
+    p5: true,
+    controls: [
+      { key: 'Click (tras entrenar)', action: 'Añade un nuevo punto para clasificar' }
+    ]
   },
   {
     id: 'firma',
@@ -403,6 +397,8 @@ function openModal(id) {
         currentSketch = new p5(flowFieldSketch, 'p5-canvas');
       } else if (id === 'marching_squares') {
         currentSketch = new p5(marchingSquaresSketch, 'p5-canvas');
+      } else if (id === 'perceptron') {
+        currentSketch = new p5(perceptronSketch, 'p5-canvas');
       }
     });
   } else {
