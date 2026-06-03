@@ -25,6 +25,7 @@ var flowFieldSketch = function(p) {
     p.particles = [];
     for (var i = 0; i < 200; i++) {
       p.particles[i] = new Particle(p);
+      p.particles[i].h = 45 + Math.random() * 15;
     }
     p.noiseSeed(99);
 
@@ -32,8 +33,8 @@ var flowFieldSketch = function(p) {
 
     if (!p.sliderRed) {
       p.sliderRed = { value: function() { return 150; } };
-      p.sliderGreen = { value: function() { return 200; } };
-      p.sliderBlue = { value: function() { return 255; } };
+      p.sliderGreen = { value: function() { return 90; } };
+      p.sliderBlue = { value: function() { return 142; } };
       p.forceSlider = { value: function() { return 5; } };
       p.velocitySlider = { value: function() { return 5; } };
     }
@@ -81,6 +82,7 @@ var flowFieldSketch = function(p) {
 
   /* Crea los controles deslizantes de color, fuerza y velocidad */
   function crearSliders(p) {
+    if (!document.getElementById('modalOverlay')?.classList.contains('open')) return;
     var controlsEl = document.getElementById('modalControls');
     if (!controlsEl) return;
 
