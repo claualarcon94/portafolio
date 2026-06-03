@@ -1298,6 +1298,7 @@ img { max-width: 100%; display: block; }
   .hero-content {
     grid-template-columns: 1fr;
     gap: 32px;
+    padding-bottom: 40px;
   }
 
   .hero-main { grid-column: 1; grid-row: 1; max-width: 100%; }
