@@ -44,16 +44,18 @@
     <div class="hero-grid"></div>
     <div class="container hero-container">
       <div class="hero-content">
-        <span class="hero-tag">Ingeniero Civil en Informática</span>
-        <h1>Claudio<br>Alarcón <span>.</span></h1>
-        <p>Ingeniero Civil en Informática orientado al desarrollo full-stack, bases de datos y automatización, con experiencia además en gráficos interactivos, simulaciones físicas, visualización de datos y ciberseguridad. Transformo tus ideas en código.</p>
+        <div class="hero-main">
+          <span class="hero-tag">Ingeniero Civil en Informática</span>
+          <h1>Claudio<br>Alarcón <span>.</span></h1>
+          <p>Ingeniero Civil en Informática orientado al desarrollo full-stack, bases de datos y automatización, con experiencia además en gráficos interactivos, simulaciones físicas, visualización de datos y ciberseguridad. Transformo tus ideas en código.</p>
+        </div>
+        <div id="hero-flow-field" class="hero-flow-field"></div>
         <div class="hero-actions">
           <a href="#proyectos" class="btn btn-primary">Ver proyectos ↓</a>
           <a href="#contacto" class="btn btn-outline">Contacto</a>
           <a href="resources/Curriculum_ClaudioAlarconGomez.pdf" class="btn btn-outline" target="_blank" rel="noopener">Ver CV →</a>
         </div>
       </div>
-      <div id="hero-flow-field" class="hero-flow-field"></div>
     </div>
   </section>
 
@@ -83,6 +85,15 @@
       </div>
 
       <div class="project-grid" id="projectGrid"></div>
+
+      <div class="processing-section">
+        <button class="processing-toggle" id="processingToggle">
+          <span>Próximos proyectos</span>
+          <span class="processing-count" id="processingCount"></span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="project-grid processing-grid" id="processingGrid"></div>
+      </div>
     </div>
   </section>
 

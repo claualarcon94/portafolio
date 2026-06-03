@@ -73,6 +73,19 @@ var flowFieldSketch = function(p) {
     }
   };
 
+  /* Redimensiona el canvas al cambiar el viewport (rotación, etc.) */
+  p.windowResized = function() {
+    var contenedor = document.getElementById('hero-flow-field');
+    if (!contenedor) return;
+    var nuevoAncho = contenedor.clientWidth;
+    var nuevoAlto = contenedor.clientHeight;
+    if (nuevoAncho > 0 && nuevoAlto > 0) {
+      p.resizeCanvas(nuevoAncho, nuevoAlto);
+      p.cols = Math.floor(p.width / p.scl);
+      p.rows = Math.floor(p.height / p.scl);
+    }
+  };
+
   /* Reinicia las partículas al hacer clic dentro del canvas */
   p.mousePressed = function() {
     if (p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) return;

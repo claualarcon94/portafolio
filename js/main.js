@@ -211,8 +211,7 @@ var currentSketch = null;
 const webApps = [
   { name: 'Dark Dwarf', category: 'clientes', desc: 'CMS personalizado para comunidad wargame con sistema de usuarios, registro, gestión de contenido, eventos y blog. Desarrollado con PHP, MySQL, HTML, CSS y JavaScript.', url: 'https://www.dark-dwarf.com', screenshot: 'images/dark-dwarf-screenshot.png' },
   { name: 'Shoshin Dojo Seishin Kan', category: 'clientes', desc: 'Próximamente', url: '#' },
-  { name: 'Proyecto Web 2', category: 'personales', desc: 'Próximamente', url: '#' },
-  { name: 'Proyecto Web 3', category: 'personales', desc: 'Próximamente', url: '#' },
+  { name: 'Proyectos Web', category: 'personales', desc: 'Próximamente', url: '#' },
   { name: 'YouTube Clone', category: 'personales', desc: 'Réplica básica de la interfaz de inicio de YouTube de 2018. Grilla de videos responsiva con thumbnails, canales y métricas. HTML + CSS vanilla.', url: 'web-apis/youtube-clone/index.html', screenshot: 'images/youtube-clone-screenshot.png' }
 ];
 
@@ -246,16 +245,18 @@ function initNavbar() {
 }
 
 function initProjectFilters() {
-  const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.project-card');
+  var buttons = document.querySelectorAll('.filter-btn');
+  var grid = document.getElementById('projectGrid');
+  if (!grid) return;
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
 
-      const filter = btn.dataset.filter;
-      cards.forEach(card => {
+      var filter = btn.dataset.filter;
+      var cards = grid.querySelectorAll('.project-card');
+      cards.forEach(function(card) {
         if (filter === 'all' || card.dataset.category === filter) {
           card.classList.remove('hidden');
         } else {
@@ -267,33 +268,57 @@ function initProjectFilters() {
 }
 
 function renderProjects() {
-  const grid = document.getElementById('projectGrid');
+  var grid = document.getElementById('projectGrid');
   if (!grid) return;
 
-  var ordenados = projects.slice().sort(function(a, b) {
-    if ((a.p5 ? 1 : 0) !== (b.p5 ? 1 : 0)) return a.p5 ? -1 : 1;
+  var p5Projects = projects.filter(function(p) { return p.p5; }).sort(function(a, b) {
     return a.title.localeCompare(b.title);
   });
 
-  grid.innerHTML = ordenados.map(p => {
+  grid.innerHTML = p5Projects.map(p => {
     var thumbSrc = p.thumbnail || 'projects/' + p.id + '/thumbnail.png';
     var imgStyle = ' style="';
     if (p.thumbPos) imgStyle += 'object-position:' + p.thumbPos + ';';
     if (p.thumbFit) imgStyle += 'object-fit:' + p.thumbFit + ';';
     imgStyle += '"';
     if (imgStyle === ' style="') imgStyle = '';
-    var topHtml = p.p5
-      ? '<div class="project-card-top"><img src="' + thumbSrc + '" alt="' + p.title + '" class="card-thumbnail"' + imgStyle + '><span class="tag">p5.js</span></div>'
-      : '<div class="project-card-top ' + p.color + '"><span class="prox-text">Próximamente</span><span class="tag">Processing</span></div>';
     return `
     <div class="project-card" data-category="${p.category}" onclick="openModal('${p.id}')">
-      ${topHtml}
+      <div class="project-card-top"><img src="${thumbSrc}" alt="${p.title}" class="card-thumbnail"${imgStyle}><span class="tag">p5.js</span></div>
       <div class="card-body">
         <span class="subtitle">${p.subtitle}</span>
         <h3>${p.title}</h3>
         <p>${p.description}</p>
         <div class="card-tags">
-          <span class="${p.p5 ? 'badge-p5' : 'badge-processing'}">${p.p5 ? 'p5.js' : 'Processing'}</span>
+          <span class="badge-p5">p5.js</span>
+          ${p.tags.slice(1, 3).map(t => `<span>${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderProcessingProjects() {
+  var grid = document.getElementById('processingGrid');
+  var countEl = document.getElementById('processingCount');
+  if (!grid) return;
+
+  var procProjects = projects.filter(function(p) { return !p.p5; }).sort(function(a, b) {
+    return a.title.localeCompare(b.title);
+  });
+
+  if (countEl) countEl.textContent = procProjects.length;
+
+  grid.innerHTML = procProjects.map(p => {
+    return `
+    <div class="project-card" data-category="${p.category}" onclick="openModal('${p.id}')">
+      <div class="project-card-top ${p.color}"><span class="prox-text">Próximamente</span><span class="tag">Processing</span></div>
+      <div class="card-body">
+        <span class="subtitle">${p.subtitle}</span>
+        <h3>${p.title}</h3>
+        <p>${p.description}</p>
+        <div class="card-tags">
+          <span class="badge-processing">Processing</span>
           ${p.tags.slice(1, 3).map(t => `<span>${t}</span>`).join('')}
         </div>
       </div>
@@ -466,11 +491,24 @@ function initScrollTop() {
   });
 }
 
+function initProcessingToggle() {
+  var toggle = document.getElementById('processingToggle');
+  var grid = document.getElementById('processingGrid');
+  if (!toggle || !grid) return;
+
+  toggle.addEventListener('click', function() {
+    grid.classList.toggle('open');
+    toggle.classList.toggle('open');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderProjects();
+  renderProcessingProjects();
   renderWebApps();
   initNavbar();
   initProjectFilters();
+  initProcessingToggle();
   if (document.getElementById('hero-flow-field')) new p5(flowFieldSketch, 'hero-flow-field');
   updateStats();
   initScrollTop();
