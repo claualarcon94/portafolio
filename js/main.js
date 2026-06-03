@@ -159,14 +159,15 @@ const projects = [
     ]
   },
   {
-    id: 'rc3',
-    title: 'RC3',
+    id: 'raycasting',
+    title: 'Raycasting',
     category: 'algorithms',
     subtitle: '2D Raycasting',
     description: 'Raycasting 2D desde un punto central con 360 rayos. Los rayos se extienden hasta chocar con paredes colocadas aleatoriamente. Visualización top-down en 2D.',
-    tags: ['Processing', 'Raycasting', 'Ray-segment intersection', '2D'],
-    icon: 'Rc',
-    color: 'cat-algorithms'
+    tags: ['p5.js', 'Raycasting', 'Ray-segment intersection', '2D'],
+    icon: 'Ra',
+    color: 'cat-algorithms',
+    p5: true
   },
   {
     id: 'rendered_raycasting',
@@ -413,6 +414,8 @@ function openModal(id) {
         currentSketch = new p5(marchingSquaresSketch, 'p5-canvas');
       } else if (id === 'perceptron') {
         currentSketch = new p5(perceptronSketch, 'p5-canvas');
+      } else if (id === 'raycasting') {
+        currentSketch = new p5(raycastingSketch, 'p5-canvas');
       }
     });
   } else {
