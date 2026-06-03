@@ -450,7 +450,20 @@ function updateStats() {
   var projEl = document.getElementById('statProjects');
   var webEl = document.getElementById('statWebApis');
   if (projEl) projEl.textContent = projects.length;
-  if (webEl) webEl.textContent = webApps.length;
+  if (webEl) webEl.textContent = '4';
+}
+
+function initScrollTop() {
+  var btn = document.getElementById('scrollTop');
+  if (!btn) return;
+
+  window.addEventListener('scroll', function() {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -460,6 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilters();
   if (document.getElementById('hero-flow-field')) new p5(flowFieldSketch, 'hero-flow-field');
   updateStats();
+  initScrollTop();
 
   document.getElementById('modalOverlay')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) closeModal();

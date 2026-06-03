@@ -1167,6 +1167,48 @@ img { max-width: 100%; display: block; }
 }
 
 /* ═══════════════════════════════════════════════
+   BOTÓN VOLVER ARRIBA — aparece al hacer scroll
+   y lleva suavemente al inicio de la página.
+   ═══════════════════════════════════════════════ */
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.scroll-top:hover {
+  background: var(--primary-light);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+.scroll-top:active {
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════
    SCROLLBAR — personalización de la barra de
    desplazamiento en navegadores WebKit.
    ═══════════════════════════════════════════════ */
