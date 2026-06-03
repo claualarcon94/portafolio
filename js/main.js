@@ -197,7 +197,7 @@ const projects = [
     title: 'Firma',
     category: 'tools',
     subtitle: 'Signature Processor',
-    description: 'Carga una imagen JPEG de firma, aplica filtro de umbral en canal azul para binarizarla (píxeles con azul < 100 se vuelven negros) y guarda el resultado como PNG.',
+    description: 'Digitaliza una foto o scan de tu firma y guarda el resultado como PNG para que puedas usarla en tus documentos.',
     tags: ['Processing', 'Image processing', 'Threshold', 'Binarization'],
     icon: 'Fi',
     color: 'cat-tools'
@@ -208,9 +208,11 @@ const projects = [
 var currentSketch = null;
 
 const webApps = [
-  { name: 'Dark Dwarf', desc: 'CMS personalizado para comunidad wargame con sistema de usuarios, registro, gestión de contenido, eventos y blog. Desarrollado con PHP, MySQL, HTML, CSS y JavaScript.', url: 'https://www.dark-dwarf.com', screenshot: 'images/dark-dwarf-screenshot.png' },
-  { name: 'Proyecto Web 2', desc: 'Próximamente', url: '#' },
-  { name: 'Proyecto Web 3', desc: 'Próximamente', url: '#' }
+  { name: 'Dark Dwarf', category: 'clientes', desc: 'CMS personalizado para comunidad wargame con sistema de usuarios, registro, gestión de contenido, eventos y blog. Desarrollado con PHP, MySQL, HTML, CSS y JavaScript.', url: 'https://www.dark-dwarf.com', screenshot: 'images/dark-dwarf-screenshot.png' },
+  { name: 'Shoshin Dojo Seishin Kan', category: 'clientes', desc: 'Próximamente', url: '#' },
+  { name: 'Proyecto Web 2', category: 'personales', desc: 'Próximamente', url: '#' },
+  { name: 'Proyecto Web 3', category: 'personales', desc: 'Próximamente', url: '#' },
+  { name: 'YouTube Clone', category: 'personales', desc: 'Réplica básica de la interfaz de inicio de YouTube de 2018. Grilla de videos responsiva con thumbnails, canales y métricas. HTML + CSS vanilla.', url: 'web-apis/youtube-clone/index.html', screenshot: 'images/youtube-clone-screenshot.png' }
 ];
 
 function initNavbar() {
@@ -298,13 +300,9 @@ function renderProjects() {
   }).join('');
 }
 
-function renderWebApps() {
-  const grid = document.getElementById('webappsGrid');
-  if (!grid) return;
-
-  grid.innerHTML = webApps.map(a => {
-    if (a.screenshot) {
-      return `
+function renderWebAppCard(a) {
+  if (a.screenshot) {
+    return `
     <a href="${a.url}" class="webapp-card webapp-card--with-img" target="_blank" rel="noopener">
       <div class="webapp-img" style="background-image:url(${a.screenshot})"></div>
       <div class="webapp-info">
@@ -313,8 +311,8 @@ function renderWebApps() {
         <span class="webapp-link">Visitar sitio →</span>
       </div>
     </a>`;
-    }
-    return `
+  }
+  return `
     <a href="${a.url}" class="webapp-card" target="_blank" rel="noopener">
       <div class="webapp-icon">
         ${a.icon ? `<img src="${a.icon}" alt="${a.name}" width="22" height="22">` : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`}
@@ -325,7 +323,23 @@ function renderWebApps() {
         <span class="webapp-link">Visitar sitio →</span>
       </div>
     </a>`;
-  }).join('');
+}
+
+function renderWebApps() {
+  var gridClientes = document.getElementById('webappsClientes');
+  var gridPersonales = document.getElementById('webappsPersonales');
+  if (!gridClientes || !gridPersonales) return;
+
+  function sortWebApps(arr) {
+    return arr.sort(function(a, b) {
+      var aReal = a.desc !== 'Próximamente';
+      var bReal = b.desc !== 'Próximamente';
+      return aReal === bReal ? 0 : aReal ? -1 : 1;
+    });
+  }
+
+  gridClientes.innerHTML = sortWebApps(webApps.filter(a => a.category === 'clientes')).map(renderWebAppCard).join('');
+  gridPersonales.innerHTML = sortWebApps(webApps.filter(a => a.category === 'personales')).map(renderWebAppCard).join('');
 }
 
 function openModal(id) {

@@ -1,6 +1,9 @@
 # Carpeta con proyectos originales de Processing (no se suben)
 Processing Projects/
 
+#Proyectos web no listos
+web-apis/amazon-clone/
+
 # Archivo temporal de logs
 consola.txt
 otros.txt

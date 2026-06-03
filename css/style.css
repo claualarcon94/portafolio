@@ -563,6 +563,14 @@ img { max-width: 100%; display: block; }
   background: rgba(59,130,246,.03);
 }
 
+.webapp-cat-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 16px;
+  letter-spacing: -.3px;
+}
+
 /* ── About Section ── */
 .about-grid {
   display: grid;
