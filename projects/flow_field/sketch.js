@@ -8,6 +8,7 @@ var flowFieldSketch = function(p) {
   /* Configuración: crea el canvas, las partículas y los sliders */
   p.setup = function() {
     var contenedor = document.getElementById('p5-canvas');
+    if (!contenedor || contenedor.clientWidth === 0) contenedor = document.getElementById('hero-flow-field');
     var ancho = contenedor ? contenedor.clientWidth : 560;
     var alto = contenedor ? contenedor.clientHeight : 350;
     p.createCanvas(ancho, alto);
@@ -28,6 +29,14 @@ var flowFieldSketch = function(p) {
     p.noiseSeed(99);
 
     crearSliders(p);
+
+    if (!p.sliderRed) {
+      p.sliderRed = { value: function() { return 150; } };
+      p.sliderGreen = { value: function() { return 200; } };
+      p.sliderBlue = { value: function() { return 255; } };
+      p.forceSlider = { value: function() { return 5; } };
+      p.velocitySlider = { value: function() { return 5; } };
+    }
   };
 
   /* Bucle principal: recalcula el campo de vectores y mueve las partículas */

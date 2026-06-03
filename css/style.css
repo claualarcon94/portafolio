@@ -144,6 +144,29 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
+.hero-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 48px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-flow-field {
+  width: 600px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.25);
+}
+
+@media (max-width: 968px) {
+  .hero-flow-field { display: none; }
+}
+
 .hero-bg {
   position: absolute;
   inset: 0;

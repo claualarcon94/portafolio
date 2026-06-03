@@ -455,6 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderWebApps();
   initNavbar();
   initProjectFilters();
+  if (document.getElementById('hero-flow-field')) new p5(flowFieldSketch, 'hero-flow-field');
   updateStats();
 
   document.getElementById('modalOverlay')?.addEventListener('click', e => {
