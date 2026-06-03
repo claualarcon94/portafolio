@@ -1,5 +1,14 @@
+/* ═══════════════════════════════════════════════
+   RESET — elimina márgenes, paddings y establece
+   box-sizing border-box para todos los elementos.
+   ═══════════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ═══════════════════════════════════════════════
+   VARIABLES CSS — paleta de colores (navy, azul,
+   naranjo, slate), sombras, radios de borde y
+   fuente principal del portafolio.
+   ═══════════════════════════════════════════════ */
 :root {
   --navy: #0f172a;
   --navy-light: #1e293b;
@@ -30,6 +39,11 @@
   --font: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* ═══════════════════════════════════════════════
+   BASE — estilos globales del body: tipografía,
+   color de fondo, espaciado y overflow. También
+   normaliza enlaces, listas e imágenes.
+   ═══════════════════════════════════════════════ */
 html { scroll-behavior: smooth; }
 
 body {
@@ -44,6 +58,10 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 img { max-width: 100%; display: block; }
 
+/* ═══════════════════════════════════════════════
+   CONTENEDOR — wrapper genérico que centra el
+   contenido con un ancho máximo de 1200px.
+   ═══════════════════════════════════════════════ */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -51,7 +69,11 @@ img { max-width: 100%; display: block; }
   padding: 0 24px;
 }
 
-/* ── Navbar ── */
+/* ═══════════════════════════════════════════════
+   NAVBAR — barra de navegación fija en la parte
+   superior. Al hacer scroll recibe fondo opaco
+   y sombra mediante la clase .scrolled.
+   ═══════════════════════════════════════════════ */
 .navbar {
   position: fixed;
   top: 0;
@@ -75,6 +97,7 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
 }
 
+/* ── Logo ── */
 .nav-logo {
   font-size: 1.35rem;
   font-weight: 800;
@@ -84,6 +107,7 @@ img { max-width: 100%; display: block; }
 
 .nav-logo span { color: var(--orange); }
 
+/* ── Links de navegación ── */
 .nav-links {
   display: flex;
   gap: 32px;
@@ -111,6 +135,7 @@ img { max-width: 100%; display: block; }
 .nav-links a:hover { color: var(--white); }
 .nav-links a:hover::after { width: 100%; }
 
+/* ── Toggle móvil ── */
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -134,7 +159,11 @@ img { max-width: 100%; display: block; }
 .nav-toggle.active span:nth-child(2) { opacity: 0; }
 .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-/* ── Hero ── */
+/* ═══════════════════════════════════════════════
+   HERO — sección principal a pantalla completa
+   con gradiente azul marino. Contiene el canvas
+   de Flow Field, texto de bienvenida y botones.
+   ═══════════════════════════════════════════════ */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -144,6 +173,7 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
+/* ── Contenedor flex del Hero ── */
 .hero-container {
   display: flex;
   justify-content: space-between;
@@ -153,6 +183,7 @@ img { max-width: 100%; display: block; }
   z-index: 2;
 }
 
+/* ── Canvas de Flow Field en el Hero ── */
 .hero-flow-field {
   width: 600px;
   aspect-ratio: 16 / 9;
@@ -167,6 +198,7 @@ img { max-width: 100%; display: block; }
   .hero-flow-field { display: none; }
 }
 
+/* ── Brillo animado de fondo ── */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -184,6 +216,7 @@ img { max-width: 100%; display: block; }
   100% { opacity: .12; transform: scale(1.1); }
 }
 
+/* ── Grilla decorativa de fondo ── */
 .hero-grid {
   position: absolute;
   inset: 0;
@@ -193,6 +226,7 @@ img { max-width: 100%; display: block; }
   background-size: 60px 60px;
 }
 
+/* ── Contenido textual del Hero ── */
 .hero-content {
   position: relative;
   z-index: 2;
@@ -236,6 +270,10 @@ img { max-width: 100%; display: block; }
   flex-wrap: wrap;
 }
 
+/* ═══════════════════════════════════════════════
+   BOTONES — estilos base para botones y sus
+   variantes (primario naranjo, outline blanco).
+   ═══════════════════════════════════════════════ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -273,11 +311,15 @@ img { max-width: 100%; display: block; }
   transform: translateY(-2px);
 }
 
-/* ── Sections ── */
+/* ═══════════════════════════════════════════════
+   SECCIONES — espaciado vertical de 100px para
+   cada sección del portafolio.
+   ═══════════════════════════════════════════════ */
 .section {
   padding: 100px 0;
 }
 
+/* ── Encabezado de sección ── */
 .section-header {
   text-align: center;
   margin-bottom: 56px;
@@ -306,7 +348,10 @@ img { max-width: 100%; display: block; }
   margin: 16px auto 0;
 }
 
-/* ── Project Filters ── */
+/* ═══════════════════════════════════════════════
+   FILTROS DE PROYECTOS — botones para filtrar
+   la grilla por categoría (Todos, Juegos, 3D…).
+   ═══════════════════════════════════════════════ */
 .project-filters {
   display: flex;
   justify-content: center;
@@ -339,13 +384,18 @@ img { max-width: 100%; display: block; }
   color: var(--white);
 }
 
-/* ── Project Grid ── */
+/* ═══════════════════════════════════════════════
+   GRLLA DE PROYECTOS — grid responsivo de
+   tarjetas de proyecto. Cada tarjeta tiene una
+   imagen superior y cuerpo con info.
+   ═══════════════════════════════════════════════ */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 24px;
 }
 
+/* ── Tarjeta de proyecto ── */
 .project-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -370,6 +420,7 @@ img { max-width: 100%; display: block; }
   transform: translateY(-4px);
 }
 
+/* ── Parte superior de la tarjeta ── */
 .project-card-top {
   height: 140px;
   display: flex;
@@ -415,6 +466,7 @@ img { max-width: 100%; display: block; }
   backdrop-filter: blur(4px);
 }
 
+/* ── Cuerpo de la tarjeta ── */
 .card-body {
   padding: 20px;
   flex: 1;
@@ -446,6 +498,7 @@ img { max-width: 100%; display: block; }
   flex: 1;
 }
 
+/* ── Tags tecnológicos ── */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -472,7 +525,11 @@ img { max-width: 100%; display: block; }
   color: #059669;
 }
 
-/* ── Category Colors ── */
+/* ═══════════════════════════════════════════════
+   COLORES DE CATEGORÍA — gradientes de fondo
+   para cada categoría de proyecto (juegos,
+   física, 3D, generativo, algoritmos, ML, tools).
+   ═══════════════════════════════════════════════ */
 .cat-games { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
 .cat-physics { background: linear-gradient(135deg, #0891b2, #22d3ee); }
 .cat-3d { background: linear-gradient(135deg, #1e3a5f, #3b82f6); }
@@ -481,7 +538,11 @@ img { max-width: 100%; display: block; }
 .cat-ml { background: linear-gradient(135deg, #be123c, #f43f5e); }
 .cat-tools { background: linear-gradient(135deg, #4338ca, #6366f1); }
 
-/* ── Web Apps Section ── */
+/* ═══════════════════════════════════════════════
+   APLICACIONES WEB — sección con fondo oscuro
+   que lista proyectos web (clientes y personales)
+   con tarjetas que incluyen screenshot y enlace.
+   ═══════════════════════════════════════════════ */
 #webapps .section-header h2 { color: var(--slate-100); }
 #webapps .section-header p { color: var(--slate-400); }
 .webapps-grid {
@@ -490,6 +551,7 @@ img { max-width: 100%; display: block; }
   gap: 20px;
 }
 
+/* ── Tarjeta de web app ── */
 .webapp-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -514,6 +576,7 @@ img { max-width: 100%; display: block; }
   transform: translateY(-2px);
 }
 
+/* ── Screenshot de la web app ── */
 .webapp-img {
   width: 100%;
   height: 180px;
@@ -527,6 +590,7 @@ img { max-width: 100%; display: block; }
   padding: 0 20px 20px;
 }
 
+/* ── Ícono de la web app ── */
 .webapp-icon {
   width: 48px;
   height: 48px;
@@ -540,6 +604,7 @@ img { max-width: 100%; display: block; }
   color: var(--primary);
 }
 
+/* ── Información de la web app ── */
 .webapp-info h4 {
   font-size: .95rem;
   font-weight: 600;
@@ -554,6 +619,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 10px;
 }
 
+/* ── Enlace a la web app ── */
 .webapp-link {
   display: inline-flex;
   align-items: center;
@@ -568,6 +634,7 @@ img { max-width: 100%; display: block; }
 .webapp-link svg { transition: var(--transition); }
 .webapp-link:hover svg { transform: translateX(2px); }
 
+/* ── Placeholder para futuras web apps ── */
 .webapp-placeholder {
   display: flex;
   align-items: center;
@@ -588,6 +655,7 @@ img { max-width: 100%; display: block; }
   background: rgba(59,130,246,.03);
 }
 
+/* ── Título de categoría de web app (Clientes / Personales) ── */
 .webapp-cat-title {
   font-size: 1.1rem;
   font-weight: 600;
@@ -596,7 +664,10 @@ img { max-width: 100%; display: block; }
   letter-spacing: -.3px;
 }
 
-/* ── About Section ── */
+/* ═══════════════════════════════════════════════
+   SOBRE MÍ — biografía con grid de dos columnas:
+   texto descriptivo + tarjetas de estadísticas.
+   ═══════════════════════════════════════════════ */
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -618,6 +689,7 @@ img { max-width: 100%; display: block; }
   line-height: 1.7;
 }
 
+/* ── Skills y tecnologías ── */
 .skills-group h4 {
   font-size: .85rem;
   text-transform: uppercase;
@@ -641,6 +713,7 @@ img { max-width: 100%; display: block; }
 .skills-tag.tool { background: rgba(16,185,129,.1); color: #059669; }
 .skills-tag.concept { background: rgba(139,92,246,.1); color: #7c3aed; }
 
+/* ── Estadísticas del portafolio ── */
 .about-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -670,7 +743,11 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
-/* ── Contact Section ── */
+/* ═══════════════════════════════════════════════
+   CONTACTO — sección con fondo oscuro que incluye
+   formulario de contacto (Web3Forms) e información
+   personal (email, ubicación, redes sociales).
+   ═══════════════════════════════════════════════ */
 .contact {
   background: var(--slate-900);
   color: var(--white);
@@ -680,12 +757,14 @@ img { max-width: 100%; display: block; }
 .contact .section-header p { color: var(--slate-400); }
 .contact .section-header .accent-line { background: var(--orange); }
 
+/* ── Grid de contacto ── */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
 }
 
+/* ── Info de contacto ── */
 .contact-info h3 {
   font-size: 1.3rem;
   font-weight: 700;
@@ -698,6 +777,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 32px;
 }
 
+/* ── Items de contacto (email, ubicación) ── */
 .contact-item {
   display: flex;
   align-items: center;
@@ -732,6 +812,7 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
+/* ── Redes sociales ── */
 .social-links {
   display: flex;
   gap: 12px;
@@ -756,6 +837,7 @@ img { max-width: 100%; display: block; }
   transform: translateY(-2px);
 }
 
+/* ── Formulario de contacto ── */
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -793,7 +875,10 @@ img { max-width: 100%; display: block; }
   align-self: flex-start;
 }
 
-/* ── Footer ── */
+/* ═══════════════════════════════════════════════
+   FOOTER — barra inferior con copyright y enlaces
+   rápidos a Inicio, Proyectos y Contacto.
+   ═══════════════════════════════════════════════ */
 .footer {
   background: var(--navy);
   padding: 32px 0;
@@ -824,7 +909,10 @@ img { max-width: 100%; display: block; }
 
 .footer-links a:hover { color: var(--white); }
 
-/* ── Project Detail Modal ── */
+/* ═══════════════════════════════════════════════
+   MODAL DE DETALLE — overlay que muestra info
+   completa de un proyecto y su demo p5.js.
+   ═══════════════════════════════════════════════ */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -838,6 +926,7 @@ img { max-width: 100%; display: block; }
 
 .modal-overlay.open { display: block; }
 
+/* ── Contenedor del modal ── */
 .modal {
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -853,6 +942,7 @@ img { max-width: 100%; display: block; }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+/* ── Área superior del modal (canvas o ícono) ── */
 .modal-top {
   aspect-ratio: 16 / 9;
   height: auto;
@@ -871,6 +961,7 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
+/* ── Canvas de p5.js dentro del modal ── */
 .modal-canvas-wrap {
   position: absolute;
   inset: 0;
@@ -887,6 +978,7 @@ img { max-width: 100%; display: block; }
   height: auto;
 }
 
+/* ── Botón de cerrar modal ── */
 .modal-close {
   position: absolute;
   top: 16px;
@@ -907,6 +999,7 @@ img { max-width: 100%; display: block; }
 
 .modal-close:hover { background: rgba(0,0,0,.5); }
 
+/* ── Cuerpo del modal ── */
 .modal-body { padding: 28px; }
 
 .modal-body-inner {
@@ -915,6 +1008,7 @@ img { max-width: 100%; display: block; }
   align-items: flex-start;
 }
 
+/* ── Info del proyecto en el modal ── */
 .modal-info {
   flex: 1;
   min-width: 0;
@@ -957,7 +1051,10 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
-/* ── Modal Controls Panel ── */
+/* ═══════════════════════════════════════════════
+   PANEL DE CONTROLES — lado derecho del modal
+   con atajos de teclado y sliders para sketches.
+   ═══════════════════════════════════════════════ */
 .modal-controls {
   width: 240px;
   flex-shrink: 0;
@@ -1043,6 +1140,7 @@ img { max-width: 100%; display: block; }
   flex: 1;
 }
 
+/* ── Indicador de estado del modal ── */
 .modal-status {
   display: inline-flex;
   align-items: center;
@@ -1068,13 +1166,19 @@ img { max-width: 100%; display: block; }
   50% { opacity: .4; }
 }
 
-/* ── Scrollbar ── */
+/* ═══════════════════════════════════════════════
+   SCROLLBAR — personalización de la barra de
+   desplazamiento en navegadores WebKit.
+   ═══════════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--slate-100); }
 ::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--slate-400); }
 
-/* ── Responsive ── */
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — ajustes de layout para distintos
+   tamaños de pantalla (tablet, móvil, pequeño).
+   ═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .contact-grid { grid-template-columns: 1fr; }
