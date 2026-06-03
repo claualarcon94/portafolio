@@ -90,7 +90,7 @@
        desde el array 'webApps' en js/main.js. La última
        tarjeta es un placeholder para futuros proyectos.
        ═══════════════════════════════════════════════ -->
-  <section class="section" id="webapps" style="background:var(--slate-100)">
+  <section class="section" id="webapps" style="background:#2d2d2d">
     <div class="container">
       <div class="section-header">
         <h2>Aplicaciones Web</h2>
@@ -218,11 +218,13 @@
             </a>
           </div>
         </div>
-        <form class="contact-form" id="contactForm">
-          <input type="text" placeholder="Tu nombre" required>
-          <input type="email" placeholder="Tu email" required>
-          <input type="text" placeholder="Asunto">
-          <textarea placeholder="Tu mensaje..." required></textarea>
+        <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="df269e02-5a0b-4062-af39-8e3be53c3f7f">
+          <input type="text" name="nombre" placeholder="Tu nombre" required>
+          <input type="email" name="email" placeholder="Tu email" required>
+          <input type="text" name="whatsapp" placeholder="Tu WhatsApp (opcional)">
+          <input type="text" name="asunto" placeholder="Asunto" required>
+          <textarea name="mensaje" placeholder="Tu mensaje..." required></textarea>
           <button type="submit" class="btn btn-primary">Enviar mensaje</button>
         </form>
       </div>

@@ -465,9 +465,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeModal();
   });
 
-  document.getElementById('contactForm')?.addEventListener('submit', e => {
+  document.getElementById('contactForm')?.addEventListener('submit', async e => {
     e.preventDefault();
-    alert('¡Gracias por tu mensaje! Te responderé a la brevedad.');
-    e.target.reset();
+    const form = e.target;
+    const data = {
+      access_key: 'df269e02-5a0b-4062-af39-8e3be53c3f7f',
+      nombre: form.nombre.value,
+      email: form.email.value,
+      whatsapp: form.whatsapp.value,
+      subject: form.asunto.value,
+      mensaje: form.mensaje.value
+    };
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (json.success) {
+        alert('¡Gracias por tu mensaje! Te responderé a la brevedad.');
+        form.reset();
+      } else {
+        alert('Hubo un error al enviar. Intenta de nuevo.');
+      }
+    } catch {
+      alert('Error de conexión. Intenta de nuevo.');
+    }
   });
 });
