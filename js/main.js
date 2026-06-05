@@ -175,9 +175,14 @@ const projects = [
     category: 'algorithms',
     subtitle: 'Wolfenstein 3D Engine',
     description: 'Motor de raycasting estilo Wolfenstein 3D. Lanza rayos desde el jugador, calcula distancias a paredes y renderiza columnas 3D con altura corregida por distancia (sin ojo de pez).',
-    tags: ['Processing', 'DDA raycasting', '3D projection', 'FPS engine'],
+    tags: ['p5.js', 'DDA raycasting', '3D projection', 'FPS engine'],
     icon: 'Rr',
-    color: 'cat-algorithms'
+    color: 'cat-algorithms',
+    p5: true,
+    controls: [
+      { key: 'W / S', action: 'Avanza / retrocede 5 px' },
+      { key: 'A / D', action: 'Gira todos los rayos ±0.05 rad' }
+    ]
   },
   {
     id: 'perceptron',
@@ -441,6 +446,8 @@ function openModal(id) {
         currentSketch = new p5(perceptronSketch, 'p5-canvas');
       } else if (id === 'raycasting') {
         currentSketch = new p5(raycastingSketch, 'p5-canvas');
+      } else if (id === 'rendered_raycasting') {
+        currentSketch = new p5(renderedRaycastingSketch, 'p5-canvas');
       }
     });
   } else {
