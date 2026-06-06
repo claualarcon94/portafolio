@@ -1,15 +1,5 @@
 const projects = [
   {
-    id: 'minesweeper',
-    title: 'Minesweeper',
-    category: 'games',
-    subtitle: 'Classic Minesweeper',
-    description: 'Buscaminas completo con celdas, banderas, indicador de estado y efectos de sonido. Incluye lógica de revelación por flood-fill, detección de victoria/derrota y modo interactivo con clics.',
-    tags: ['Processing', 'Grid logic', 'Flood-fill', 'Minim audio'],
-    icon: 'M',
-    color: 'cat-games'
-  },
-  {
     id: 'snaaake',
     title: 'Snaaake',
     category: 'games',
@@ -163,6 +153,22 @@ const projects = [
       { key: 'b', action: 'Muestra/oculta burbujas' },
       { key: 'g', action: 'Muestra/oculta rejilla' },
       { key: 'r', action: 'Muestra/oculta relleno' }
+    ]
+  },
+  {
+    id: 'minesweeper',
+    title: 'Minesweeper',
+    category: 'games',
+    subtitle: 'Classic Minesweeper',
+    description: 'Clásico Buscaminas recreado en p5.js',
+    tags: ['p5.js', 'Grid logic', 'Flood-fill', 'Mouse input'],
+    icon: 'M',
+    color: 'cat-games',
+    p5: true,
+    controls: [
+      { key: 'Click izq', action: 'Destapa casilla' },
+      { key: 'Click der', action: 'Bandera / ?' },
+      { key: '😀', action: 'Reinicia juego' }
     ]
   },
   {
@@ -507,6 +513,8 @@ function openModal(id) {
         currentSketch = new p5(flowFieldSketch, 'p5-canvas');
       } else if (id === 'marching_squares') {
         currentSketch = new p5(marchingSquaresSketch, 'p5-canvas');
+      } else if (id === 'minesweeper') {
+        currentSketch = new p5(minesweeperSketch, 'p5-canvas');
       } else if (id === 'perceptron') {
         currentSketch = new p5(perceptronSketch, 'p5-canvas');
       } else if (id === 'raycasting') {
@@ -535,6 +543,7 @@ function openModal(id) {
 function closeSketch() {
   var sliders = document.querySelectorAll('.slider-section');
   for (var i = 0; i < sliders.length; i++) sliders[i].remove();
+  if (typeof Sound !== 'undefined') Sound.stopAll();
   if (currentSketch) {
     currentSketch.remove();
     currentSketch = null;
