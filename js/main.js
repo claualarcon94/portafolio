@@ -320,22 +320,24 @@ function renderProjectPage() {
 }
 
 function updatePaginationControls() {
-  var controls = document.getElementById('paginationControls');
-  if (!controls) return;
-
+  var html;
   var totalPages = Math.ceil(projectFiltered.length / projectPageSize);
-  if (totalPages <= 1) { controls.innerHTML = ''; return; }
+  if (totalPages <= 1) { html = ''; } else {
+    html =
+      '<button class="pag-btn pag-prev"' + (projectCurrentPage === 1 ? ' disabled' : '') + '>←</button>' +
+      '<span class="pag-info">' + projectCurrentPage + ' / ' + totalPages + '</span>' +
+      '<button class="pag-btn pag-next"' + (projectCurrentPage === totalPages ? ' disabled' : '') + '>→</button>';
+  }
 
-  controls.innerHTML =
-    '<button class="pag-btn" id="pagPrev"' + (projectCurrentPage === 1 ? ' disabled' : '') + '>←</button>' +
-    '<span class="pag-info">' + projectCurrentPage + ' / ' + totalPages + '</span>' +
-    '<button class="pag-btn" id="pagNext"' + (projectCurrentPage === totalPages ? ' disabled' : '') + '>→</button>';
-
-  document.getElementById('pagPrev').addEventListener('click', function() {
-    if (projectCurrentPage > 1) { projectCurrentPage--; renderProjectPage(); scrollToProjects(); }
-  });
-  document.getElementById('pagNext').addEventListener('click', function() {
-    if (projectCurrentPage < totalPages) { projectCurrentPage++; renderProjectPage(); scrollToProjects(); }
+  [].forEach.call(document.querySelectorAll('.pagination'), function(el) {
+    el.innerHTML = html;
+    if (html === '') return;
+    el.querySelector('.pag-prev').addEventListener('click', function() {
+      if (projectCurrentPage > 1) { projectCurrentPage--; renderProjectPage(); scrollToProjects(); }
+    });
+    el.querySelector('.pag-next').addEventListener('click', function() {
+      if (projectCurrentPage < totalPages) { projectCurrentPage++; renderProjectPage(); scrollToProjects(); }
+    });
   });
 }
 
@@ -443,12 +445,34 @@ function openModal(id) {
   // Controles interactivos
   var controlsEl = document.getElementById('modalControls');
   if (p.controls && p.controls.length) {
-    controlsEl.innerHTML = '<h4 class="controls-title">⌨ Controles</h4>' +
-      '<div class="controls-list">' +
-      p.controls.map(function(c) {
-        return '<div class="control-item"><kbd>' + c.key + '</kbd><span>' + c.action + '</span></div>';
-      }).join('') +
-      '</div>';
+    var html = '<h4 class="controls-title">⌨ Controles</h4><div class="controls-list">';
+    for (var i = 0; i < p.controls.length; i++) {
+      var c = p.controls[i];
+      var isMouse = c.key.toLowerCase().indexOf('click') !== -1 ||
+                    c.key.toLowerCase().indexOf('arrastrar') !== -1;
+      if (isMouse) {
+        html += '<div class="control-item"><kbd>' + c.key + '</kbd><span>' + c.action + '</span></div>';
+      } else {
+        var keys = c.key.split(/[\/\s,]+/).filter(function(k) { return k.length > 0; });
+        var btns = keys.map(function(k) {
+          return '<button class="ctrl-keybtn" data-key="' + k.toLowerCase() + '">' + k + '</button>';
+        }).join('');
+        html += '<div class="control-item">' + btns + '<span>' + c.action + '</span></div>';
+      }
+    }
+    html += '</div>';
+    controlsEl.innerHTML = html;
+
+    var keyBtns = controlsEl.querySelectorAll('.ctrl-keybtn');
+    for (var j = 0; j < keyBtns.length; j++) {
+      keyBtns[j].addEventListener('click', function() {
+        if (currentSketch) {
+          currentSketch.key = this.dataset.key;
+          if (currentSketch.keyPressed) currentSketch.keyPressed();
+        }
+      });
+    }
+
     controlsEl.style.display = '';
   } else {
     controlsEl.style.display = 'none';
