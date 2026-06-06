@@ -1,3 +1,6 @@
+/* Sketch principal de Buscaminas — lógica completa del juego:
+ * generación de minas, clics izquierdo/derecho, cronómetro,
+ * detección de victoria o derrota y reinicio del juego. */
 var minesweeperSketch = function(p) {
   var total = 10;
   var probability = 9;
@@ -24,6 +27,7 @@ var minesweeperSketch = function(p) {
   p.stats.lostSoundsPlayed = false;
   p.stats.ready = false;
 
+  /* Configura canvas y carga imágenes PNG de forma asíncrona */
   p.setup = function() {
     p.createCanvas(401, 451);
     p.canvas.oncontextmenu = function() { return false; };
@@ -56,6 +60,7 @@ var minesweeperSketch = function(p) {
     winImg.src = 'projects/minesweeper/data/win.png';
   };
 
+  /* Bucle principal: renderiza tablero, cara y cronómetro, verifica victoria o derrota */
   p.draw = function() {
     if (!p.stats.ready) return;
     if (lost && !p.stats.lostSoundsPlayed) {
@@ -85,6 +90,7 @@ var minesweeperSketch = function(p) {
     }
   };
 
+  /* Revela todas las celdas y marca el juego como terminado */
   var gameover = function() {
     for (var i = 0; i < ncells; i++) {
       for (var j = 0; j < ncells; j++) {
@@ -94,6 +100,7 @@ var minesweeperSketch = function(p) {
     over = true;
   };
 
+  /* Muestra mensaje de victoria y limpia las banderas */
   var win = function() {
     gameover();
     p.push();
@@ -108,6 +115,7 @@ var minesweeperSketch = function(p) {
     }
   };
 
+  /* Muestra mensaje de derrota y reproduce sonidos */
   var gamelost = function() {
     gameover();
     lost = true;
@@ -121,6 +129,7 @@ var minesweeperSketch = function(p) {
     p.text("YOU'VE LOST!!", p.width / 2 - 175, p.height / 2);
   };
 
+  /* Reinicia el tablero: genera minas, crea celdas y resetea estado */
   var startnewgame = function() {
     lost = false;
     over = false;
@@ -162,6 +171,7 @@ var minesweeperSketch = function(p) {
     }
   };
 
+  /* Cuenta cuántas banderas hay colocadas en el tablero */
   var flagcount = function() {
     var flagc = 0;
     for (var i = 0; i < ncells; i++) {
@@ -174,6 +184,7 @@ var minesweeperSketch = function(p) {
     return flagc;
   };
 
+  /* Dibuja cronómetro y contador de minas restantes */
   var showTime = function() {
     p.textSize(32);
     p.fill(200, 0, 0);
@@ -191,6 +202,7 @@ var minesweeperSketch = function(p) {
     }
   };
 
+  /* Clic en cara reinicia, botón derecho marca bandera/duda, izquierdo revela */
   p.mousePressed = function() {
     if (!p.stats.ready) return false;
     if (p.mouseX >= p.width / 2 - 25 && p.mouseX <= p.width / 2 - 25 + 50 && p.mouseY >= p.height - 50 && p.mouseY <= p.height - 50 + 50) {

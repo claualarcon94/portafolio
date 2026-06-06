@@ -1,3 +1,6 @@
+/* Raycasting Renderizado — versión mejorada con split-screen:
+ * vista 2D a la izquierda y proyección 3D a la derecha.
+ * Navegación con WASD y rotación con A/D. */
 var renderedRaycastingSketch = function(p) {
   var paredes = 10;
   var rays = 401;
@@ -10,6 +13,7 @@ var renderedRaycastingSketch = function(p) {
   var ray = [];
   var distances = [];
 
+  /* Configura canvas, genera paredes (borde y aleatorias) y crea los rayos */
   p.setup = function() {
     var contenedor = document.getElementById('p5-canvas');
     var ancho = contenedor ? contenedor.clientWidth : 800;
@@ -37,6 +41,7 @@ var renderedRaycastingSketch = function(p) {
     for (var k = 0; k < rays; k++) distances[k] = 0;
   };
 
+  /* Bucle principal: dibuja paredes, lanza rayos y renderiza la proyección 3D */
   p.draw = function() {
     p.background(0);
 
@@ -51,6 +56,7 @@ var renderedRaycastingSketch = function(p) {
     p.rect(p.width - p.width / 4, p.height / 2, 5, 5);
   };
 
+  /* Lanza rayos desde el foco y encuentra la pared más cercana para cada uno */
   function look() {
     for (var i = 0; i < rays; i++) {
       var closest = null;
@@ -82,6 +88,7 @@ var renderedRaycastingSketch = function(p) {
     }
   }
 
+  /* Dibuja la proyección 3D usando las distancias calculadas por los rayos */
   function render() {
     for (var i = 0; i < rays; i++) {
       proy = 25000 / distances[i];
@@ -99,6 +106,7 @@ var renderedRaycastingSketch = function(p) {
     }
   }
 
+  /* W/S: avance y retroceso, A/D: rotación de los rayos */
   p.keyPressed = function() {
     for (var j = 0; j < ray.length; j++) {
       if (p.key === 'a' || p.key === 'A') { ray[j].angle -= 0.05; }

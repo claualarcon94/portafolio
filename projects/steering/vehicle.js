@@ -1,3 +1,6 @@
+/* SteeringVehicle — agente autónomo con comportamientos de búsqueda
+ * (seek), huida (flee), separación, seguimiento de campo vectorial
+ * y seguimiento de camino (followPath). */
 var SteeringVehicle = function(p, lx, ly, ms, mf) {
   this.location = new p5.Vector(lx, ly);
   this.velocity = new p5.Vector(2, -2);
@@ -6,6 +9,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
   this.maxspeed = ms;
   this.maxforce = mf;
 
+  /* Integración de Euler: aplica aceleración, limita velocidad y actualiza posición */
   this.update = function() {
     this.velocity.add(this.acceleration);
     this.velocity.limit(this.maxspeed);
@@ -13,10 +17,12 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     this.acceleration.mult(0);
   };
 
+  /* Acumula una fuerza en la aceleración */
   this.applyForce = function(force) {
     this.acceleration.add(force);
   };
 
+  /* Dirige el vehículo hacia un objetivo */
   this.seek = function(target) {
     var desired = p5.Vector.sub(target, this.location);
     desired.normalize();
@@ -26,6 +32,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     this.applyForce(steer);
   };
 
+  /* Huye de un objetivo si está dentro del radio de miedo */
   this.flee = function(target) {
     var distance = p5.Vector.dist(this.location, target);
     if (distance < 100) {
@@ -38,6 +45,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     }
   };
 
+  /* Evita el hacinamiento separándose de vehículos cercanos */
   this.separateFromNehighbours = function(vehicles) {
     var target = new p5.Vector();
     var count = 0;
@@ -67,6 +75,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     }
   };
 
+  /* Mantiene al vehículo dentro de los bordes del canvas */
   this.stayBetweenWalls = function() {
     if (this.location.x < 25) {
       var desired = new p5.Vector(this.maxspeed, this.velocity.y);
@@ -91,6 +100,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     }
   };
 
+  /* Sigue el vector del campo Perlin en la posición actual */
   this.followField = function(field) {
     var desired = field.lookup(this.location);
     desired.mult(this.maxspeed);
@@ -99,6 +109,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     this.applyForce(steer);
   };
 
+  /* Predice la posición futura y busca el punto más cercano en el camino */
   this.followPath = function(path) {
     var velPred = this.velocity.copy();
     velPred.mult(10);
@@ -135,6 +146,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     }
   };
 
+  /* Calcula el punto normal sobre el segmento a-b desde la posición predicha */
   function getNormalPoint(a, b, predictedLoc) {
     var seg = p5.Vector.sub(b, a);
     var aux = p5.Vector.sub(predictedLoc, a);
@@ -143,6 +155,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     return p5.Vector.add(a, seg);
   }
 
+  /* Teletransporta al vehículo al borde opuesto si se sale del canvas */
   this.borders = function() {
     if (this.location.x < 0) { this.location.x = p.width; }
     if (this.location.y < -this.r) { this.location.y = p.height + this.r; }
@@ -150,6 +163,7 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
     if (this.location.y > p.height + this.r) { this.location.y = -this.r; }
   };
 
+  /* Dibuja el vehículo como un triángulo orientado en la dirección de la velocidad */
   this.display = function() {
     var theta = this.velocity.heading() + Math.PI / 2;
     p.fill(250, 132, 35);

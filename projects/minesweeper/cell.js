@@ -1,3 +1,7 @@
+/* Cell — representa una celda del tablero de buscaminas.
+ * Contiene métodos para revelar, contar vecinos, dibujar contenido
+ * y propagar el relleno de celdas vacías (flood fill). */
+/* Inicializa una celda con posición, tipo (mina o no) y estado de descubrimiento */
 var Cell = function(p, x, y, m) {
   this.p = p;
   this.row = x;
@@ -13,6 +17,7 @@ var Cell = function(p, x, y, m) {
   }
 };
 
+/* Cuenta cuántas minas hay en las 8 celdas vecinas */
 Cell.prototype.countneighbours = function() {
   var field = this.p.stats.field;
   var ncells = this.p.stats.ncells;
@@ -27,6 +32,7 @@ Cell.prototype.countneighbours = function() {
   }
 };
 
+/* Dibuja la celda según su estado: revelada, mina, no revelada, bandera o duda */
 Cell.prototype.show = function() {
   var w = this.p.stats.w;
   var field = this.p.stats.field;
@@ -56,6 +62,7 @@ Cell.prototype.show = function() {
   }
 };
 
+/* Marca la celda como revelada y si no tiene vecinos propaga el relleno */
 Cell.prototype.reveal = function() {
   if (!this.revealed) {
     this.revealed = true;
@@ -66,6 +73,7 @@ Cell.prototype.reveal = function() {
   }
 };
 
+/* Expande el revelado a todas las celdas vecinas no minadas */
 Cell.prototype.floodFill = function() {
   var field = this.p.stats.field;
   var ncells = this.p.stats.ncells;
@@ -80,6 +88,7 @@ Cell.prototype.floodFill = function() {
   }
 };
 
+/* Dibuja el número de minas vecinas con color según la cantidad */
 Cell.prototype.numbers = function() {
   var w = this.p.stats.w;
   if (this.neighbours === 1) {
@@ -99,6 +108,7 @@ Cell.prototype.numbers = function() {
   this.p.text(this.neighbours, this.col * w + 10, this.row * w + w - 5);
 };
 
+/* Dibuja una mina: marcador X y cuerpo cilíndrico */
 Cell.prototype.drawmine = function() {
   var w = this.p.stats.w;
   this.p.fill(75);
@@ -108,6 +118,7 @@ Cell.prototype.drawmine = function() {
   this.p.ellipse(this.col * w + w / 2, this.row * w + w / 2, 16, 16);
 };
 
+/* Dibuja una celda no revelada con efecto biselado 3D */
 Cell.prototype.unrcell = function() {
   var w = this.p.stats.w;
   this.p.fill(175);
@@ -139,6 +150,7 @@ Cell.prototype.unrcell = function() {
   this.p.rect(this.col * w, this.row * w, w, w);
 };
 
+/* Dibuja una bandera roja sobre la celda */
 Cell.prototype.drawflag = function() {
   var w = this.p.stats.w;
   this.p.fill(0);
@@ -152,6 +164,7 @@ Cell.prototype.drawflag = function() {
   this.p.endShape(this.p.CLOSE);
 };
 
+/* Dibuja un signo de interrogación sobre la celda */
 Cell.prototype.drawdoubt = function() {
   var w = this.p.stats.w;
   this.p.text("?", this.col * w + 14, this.row * w + w - 8);

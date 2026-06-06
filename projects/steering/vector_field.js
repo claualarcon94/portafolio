@@ -1,3 +1,6 @@
+/* SteeringVectorField — campo de vectores generado con ruido Perlin.
+ * Cada celda contiene un vector normalizado que guía el movimiento
+ * de los vehículos que lo consultan mediante lookup(). */
 var SteeringVectorField = function(p, r) {
   var resolution = r;
   this.cols = Math.floor(p.width / r);
@@ -8,6 +11,7 @@ var SteeringVectorField = function(p, r) {
     this.field[i] = [];
   }
 
+  /* Genera vectores en cada celda usando ruido Perlin 3D */
   this.initialize = function(time) {
     var yoff = 0;
 
@@ -22,6 +26,7 @@ var SteeringVectorField = function(p, r) {
     }
   };
 
+  /* Dibuja cada vector como una línea orientada */
   this.display = function() {
     for (var i = 0; i < this.rows; i++) {
       for (var j = 0; j < this.cols; j++) {
@@ -30,6 +35,7 @@ var SteeringVectorField = function(p, r) {
     }
   };
 
+  /* Dibuja un vector individual rotado según su dirección */
   function drawVector(v, x, y, scayl) {
     p.push();
     p.translate(x + resolution / 2, y + resolution / 2);
@@ -41,6 +47,7 @@ var SteeringVectorField = function(p, r) {
     p.pop();
   }
 
+  /* Retorna el vector en la celda que contiene la posición dada */
   this.lookup = function(lookup) {
     var column = Math.floor(Math.min(Math.max(lookup.x / resolution, 0), this.cols - 1));
     var row = Math.floor(Math.min(Math.max(lookup.y / resolution, 0), this.rows - 1));

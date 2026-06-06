@@ -1,3 +1,5 @@
+/* Terreno 3D — superficie animada generada con ruido Perlin en modo WEBGL.
+ * Cada frame varía el offset Z para crear una ondulación continua. */
 var terrainSketch = function(p) {
   var cols, rows, scl;
   var terrain = [];
@@ -5,6 +7,7 @@ var terrainSketch = function(p) {
   var yin = 0;
   var zoff = 0;
 
+  /* Configura canvas WEBGL e inicializa la matriz del terreno */
   p.setup = function() {
     var contenedor = document.getElementById('p5-canvas');
     var ancho = contenedor ? contenedor.clientWidth : 800;
@@ -22,6 +25,7 @@ var terrainSketch = function(p) {
     }
   };
 
+  /* Genera altura con Perlin noise y dibuja la superficie 3D animada */
   p.draw = function() {
     var yoff = yin;
     yin -= 0.02;

@@ -1,3 +1,6 @@
+/* SteeringPath — camino sinusoidal que los vehículos pueden seguir.
+ * Se compone de puntos interpolados a lo largo de una función seno. */
+/* Genera puntos a lo largo de una curva sinusoidal para que los vehículos lo sigan */
 var SteeringPath = function(p) {
   this.radius = 6;
   this.points = [];
@@ -9,6 +12,7 @@ var SteeringPath = function(p) {
     this.points.push(new p5.Vector(x, y));
   }
 
+  /* Dibuja el camino como una banda gris con borde negro */
   this.display = function() {
     p.stroke(175);
     p.strokeWeight(this.radius * 2);

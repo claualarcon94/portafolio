@@ -1,9 +1,12 @@
+/* RrRay — rayo que se proyecta desde una posición en un ángulo dado.
+ * Calcula la intersección más cercana con una pared y retorna el punto. */
 var RrRay = function(p, tempAngle) {
   this.R = 1000;
   this.angle = Math.PI * tempAngle / 180;
   this.pos = new p5.Vector(0, 0);
   this.dir = new p5.Vector(0, 0);
 
+  /* Reposiciona el origen del rayo y recalcula su dirección */
   this.update = function(cx, cy) {
     this.pos = new p5.Vector(cx, cy);
     this.dir = new p5.Vector(
@@ -12,6 +15,7 @@ var RrRay = function(p, tempAngle) {
     );
   };
 
+  /* Calcula si el rayo intersecta una pared y retorna el punto de contacto */
   this.intersection = function(wall) {
     var x1 = this.pos.x;
     var y1 = this.pos.y;
