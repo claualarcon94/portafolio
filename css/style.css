@@ -171,6 +171,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
   background: linear-gradient(135deg, var(--navy) 0%, var(--primary) 50%, #0f2b4a 100%);
   overflow: hidden;
+  padding-top: 80px;
 }
 
 /* ── Contenedor flex del Hero ── */
