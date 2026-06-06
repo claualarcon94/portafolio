@@ -85,9 +85,10 @@ const projects = [
     category: '3d',
     subtitle: '3D Perlin Terrain',
     description: 'Terreno 3D generado con ruido Perlin mapeado a alturas Z. Renderizado como malla de triángulos con cámara rotatoria para efecto de sobrevuelo.',
-    tags: ['Processing', 'Perlin noise', 'Heightmap', 'TRIANGLE_STRIP'],
+    tags: ['p5.js', 'Perlin noise', 'Heightmap', 'TRIANGLE_STRIP', 'WEBGL'],
     icon: 'T',
-    color: 'cat-3d'
+    color: 'cat-3d',
+    p5: true
   },
   {
     id: 'colored_squares',
@@ -448,6 +449,8 @@ function openModal(id) {
         currentSketch = new p5(raycastingSketch, 'p5-canvas');
       } else if (id === 'rendered_raycasting') {
         currentSketch = new p5(renderedRaycastingSketch, 'p5-canvas');
+      } else if (id === 'terrain') {
+        currentSketch = new p5(terrainSketch, 'p5-canvas');
       }
     });
   } else {
