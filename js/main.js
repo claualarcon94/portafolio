@@ -45,9 +45,15 @@ const projects = [
     category: 'physics',
     subtitle: 'Steering Behaviors',
     description: 'Implementación de los comportamientos de dirección de Craig Reynolds: seek, flee, path following, flow-field y sistemas de partículas. Agentes autónomos reaccionando a campos vectoriales.',
-    tags: ['Processing', 'Steering forces', 'AI agents', 'Vector fields'],
+    tags: ['p5.js', 'Steering forces', 'AI agents', 'Vector fields'],
     icon: 'St',
-    color: 'cat-physics'
+    color: 'cat-physics',
+    p5: true,
+    controls: [
+      { key: 'Click', action: 'Atrae agentes' },
+      { key: 'G', action: 'Muestra campo vectorial' },
+      { key: 'P', action: 'Path / Field' }
+    ]
   },
   {
     id: 'cubes_and_waves',
@@ -250,38 +256,45 @@ function initNavbar() {
   }, { passive: true });
 }
 
+var projectPageSize = 6;
+var projectCurrentPage = 1;
+var projectFiltered = [];
+
 function initProjectFilters() {
   var buttons = document.querySelectorAll('.filter-btn');
-  var grid = document.getElementById('projectGrid');
-  if (!grid) return;
-
   buttons.forEach(function(btn) {
     btn.addEventListener('click', function() {
       buttons.forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-
-      var filter = btn.dataset.filter;
-      var cards = grid.querySelectorAll('.project-card');
-      cards.forEach(function(card) {
-        if (filter === 'all' || card.dataset.category === filter) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+      projectCurrentPage = 1;
+      projectFiltered = getFilteredProjects(btn.dataset.filter);
+      renderProjectPage();
     });
   });
 }
 
+function getFilteredProjects(filter) {
+  return projects.filter(function(p) {
+    return p.p5 && (filter === 'all' || p.category === filter);
+  }).sort(function(a, b) {
+    return a.title.localeCompare(b.title);
+  });
+}
+
 function renderProjects() {
+  projectFiltered = getFilteredProjects('all');
+  projectCurrentPage = 1;
+  renderProjectPage();
+}
+
+function renderProjectPage() {
   var grid = document.getElementById('projectGrid');
   if (!grid) return;
 
-  var p5Projects = projects.filter(function(p) { return p.p5; }).sort(function(a, b) {
-    return a.title.localeCompare(b.title);
-  });
+  var start = (projectCurrentPage - 1) * projectPageSize;
+  var pageProjects = projectFiltered.slice(start, start + projectPageSize);
 
-  grid.innerHTML = p5Projects.map(p => {
+  grid.innerHTML = pageProjects.map(p => {
     var thumbSrc = p.thumbnail || 'projects/' + p.id + '/thumbnail.png';
     var imgStyle = ' style="';
     if (p.thumbPos) imgStyle += 'object-position:' + p.thumbPos + ';';
@@ -302,6 +315,33 @@ function renderProjects() {
       </div>
     </div>`;
   }).join('');
+
+  updatePaginationControls();
+}
+
+function updatePaginationControls() {
+  var controls = document.getElementById('paginationControls');
+  if (!controls) return;
+
+  var totalPages = Math.ceil(projectFiltered.length / projectPageSize);
+  if (totalPages <= 1) { controls.innerHTML = ''; return; }
+
+  controls.innerHTML =
+    '<button class="pag-btn" id="pagPrev"' + (projectCurrentPage === 1 ? ' disabled' : '') + '>←</button>' +
+    '<span class="pag-info">' + projectCurrentPage + ' / ' + totalPages + '</span>' +
+    '<button class="pag-btn" id="pagNext"' + (projectCurrentPage === totalPages ? ' disabled' : '') + '>→</button>';
+
+  document.getElementById('pagPrev').addEventListener('click', function() {
+    if (projectCurrentPage > 1) { projectCurrentPage--; renderProjectPage(); scrollToProjects(); }
+  });
+  document.getElementById('pagNext').addEventListener('click', function() {
+    if (projectCurrentPage < totalPages) { projectCurrentPage++; renderProjectPage(); scrollToProjects(); }
+  });
+}
+
+function scrollToProjects() {
+  var el = document.getElementById('proyectos');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderProcessingProjects() {
@@ -451,6 +491,8 @@ function openModal(id) {
         currentSketch = new p5(renderedRaycastingSketch, 'p5-canvas');
       } else if (id === 'terrain') {
         currentSketch = new p5(terrainSketch, 'p5-canvas');
+      } else if (id === 'steering') {
+        currentSketch = new p5(steeringSketch, 'p5-canvas');
       }
     });
   } else {

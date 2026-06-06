@@ -424,6 +424,47 @@ img { max-width: 100%; display: block; }
   gap: 24px;
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.pag-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-700);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.pag-btn:hover:not(:disabled) {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.pag-btn:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.pag-info {
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  min-width: 48px;
+  text-align: center;
+}
+
 /* ── Sección de próximos proyectos (Processing) ── */
 .processing-section {
   margin-top: 48px;
