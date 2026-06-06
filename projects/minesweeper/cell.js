@@ -132,6 +132,11 @@ Cell.prototype.unrcell = function() {
   this.p.noStroke();
   this.p.fill(50);
   this.p.endShape(this.p.CLOSE);
+  
+  this.p.noFill();
+  this.p.stroke(50);
+  this.p.strokeWeight(1.5);
+  this.p.rect(this.col * w, this.row * w, w, w);
 };
 
 Cell.prototype.drawflag = function() {
