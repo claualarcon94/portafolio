@@ -91,7 +91,7 @@ var renderedRaycastingSketch = function(p) {
   /* Dibuja la proyección 3D usando las distancias calculadas por los rayos */
   function render() {
     for (var i = 0; i < rays; i++) {
-      proy = 25000 / distances[i];
+      proy = 25000 / distances[i] * (p.height / 320);
       wallH = proy;
 
       p.push();
