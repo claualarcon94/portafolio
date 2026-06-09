@@ -2,13 +2,14 @@
  * Se compone de puntos interpolados a lo largo de una función seno. */
 /* Genera puntos a lo largo de una curva sinusoidal para que los vehículos lo sigan */
 var SteeringPath = function(p) {
-  this.radius = 6;
+  var s = Math.min(1, p.width / 800);
+  this.radius = 6 * s;
   this.points = [];
   this.numOfPoints = 80;
 
   for (var i = 0; i < this.numOfPoints; i++) {
     var x = p.map(i, 0, this.numOfPoints - 1, 0, p.width);
-    var y = Math.sin(p.map(x, 0, p.width, 0, 8 * Math.PI)) * 100 + p.height / 2;
+    var y = Math.sin(p.map(x, 0, p.width, 0, 8 * Math.PI)) * 100 * s + p.height / 2;
     this.points.push(new p5.Vector(x, y));
   }
 

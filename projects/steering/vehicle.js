@@ -5,7 +5,8 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
   this.location = new p5.Vector(lx, ly);
   this.velocity = new p5.Vector(2, -2);
   this.acceleration = new p5.Vector(0, 0);
-  this.r = 6;
+  var s = Math.min(1, p.width / 800);
+  this.r = 6 * s;
   this.maxspeed = ms;
   this.maxforce = mf;
 
@@ -34,8 +35,9 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
 
   /* Huye de un objetivo si está dentro del radio de miedo */
   this.flee = function(target) {
+    var s = Math.min(1, p.width / 800);
     var distance = p5.Vector.dist(this.location, target);
-    if (distance < 100) {
+    if (distance < 100 * s) {
       var desired = p5.Vector.sub(target, this.location);
       desired.mult(-1);
       desired.setMag(this.maxspeed);
@@ -77,22 +79,24 @@ var SteeringVehicle = function(p, lx, ly, ms, mf) {
 
   /* Mantiene al vehículo dentro de los bordes del canvas */
   this.stayBetweenWalls = function() {
-    if (this.location.x < 25) {
+    var s = Math.min(1, p.width / 800);
+    var m = 25 * s;
+    if (this.location.x < m) {
       var desired = new p5.Vector(this.maxspeed, this.velocity.y);
       var steer = p5.Vector.sub(desired, this.velocity);
       steer.limit(this.maxforce);
       this.applyForce(steer);
-    } else if (this.location.x > p.width - 25) {
+    } else if (this.location.x > p.width - m) {
       var desired = new p5.Vector(-this.maxspeed, this.velocity.y);
       var steer = p5.Vector.sub(desired, this.velocity);
       steer.limit(this.maxforce);
       this.applyForce(steer);
-    } else if (this.location.y < 25) {
+    } else if (this.location.y < m) {
       var desired = new p5.Vector(this.velocity.x, this.maxspeed);
       var steer = p5.Vector.sub(desired, this.velocity);
       steer.limit(this.maxforce);
       this.applyForce(steer);
-    } else if (this.location.y > p.height - 25) {
+    } else if (this.location.y > p.height - m) {
       var desired = new p5.Vector(this.velocity.x, -this.maxspeed);
       var steer = p5.Vector.sub(desired, this.velocity);
       steer.limit(this.maxforce * 3.5);

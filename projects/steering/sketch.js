@@ -17,7 +17,8 @@ var steeringSketch = function(p) {
     p.createCanvas(ancho, alto);
 
     field = new SteeringVectorField(p, resolution);
-    vehicles = new SteeringParticleSystem(p, numero, ancho, alto);
+    var scale = Math.min(1, ancho / 800);
+    vehicles = new SteeringParticleSystem(p, numero, ancho, alto, scale);
     path = new SteeringPath(p);
   };
 

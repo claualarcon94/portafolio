@@ -40,7 +40,7 @@ var SteeringVectorField = function(p, r) {
     p.push();
     p.translate(x + resolution / 2, y + resolution / 2);
     p.stroke(0, 150, 200);
-    p.strokeWeight(2);
+    p.strokeWeight(2 * Math.min(1, p.width / 800));
     p.rotate(v.heading());
     var len = v.mag() * scayl;
     p.line(0, 0, len, 0);

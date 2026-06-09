@@ -1,11 +1,11 @@
 /* SteeringParticleSystem — sistema que gestiona múltiples vehículos
  * y les aplica comportamientos colectivos (campo, camino, separación). */
 /* Crea N vehículos en posiciones aleatorias dentro del canvas */
-var SteeringParticleSystem = function(p, numero, ancho, alto) {
+var SteeringParticleSystem = function(p, numero, ancho, alto, scale) {
   this.vehicles = [];
 
   for (var i = 0; i < numero; i++) {
-    this.vehicles.push(new SteeringVehicle(p, p.random(ancho), p.random(alto), 3, 0.5));
+    this.vehicles.push(new SteeringVehicle(p, p.random(ancho), p.random(alto), 3 * scale, 0.5 * scale));
   }
 
   /* Aplica comportamientos (campo, camino, separación), actualiza y dibuja cada vehículo */
