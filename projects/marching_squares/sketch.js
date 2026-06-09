@@ -39,7 +39,7 @@ var marchingSquaresSketch = function(p) {
     rows = Math.floor(p.height / res) + 1;
     Field = new Array(rows);
     for (var i = 0; i < rows; i++) Field[i] = new Array(cols);
-    for (var i = 0; i < 16; i++) bubbles.push(new Bubble(p));
+    for (var i = 0; i < 10; i++) bubbles.push(new Bubble(p));
   };
 
   /* Bucle principal: calcula el campo, dibuja contornos y metaballs */
