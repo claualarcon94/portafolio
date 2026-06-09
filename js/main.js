@@ -1,6 +1,7 @@
 const projects = [
   {
     id: 'snake',
+    date: '2026-06-08',
     title: 'Snake',
     category: 'games',
     subtitle: 'Snake Game',
