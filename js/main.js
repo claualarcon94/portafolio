@@ -514,7 +514,7 @@ function openModal(id) {
     }
 
     controlsEl.style.display = '';
-    if (p.id === 'snake') bodyInner.insertBefore(controlsEl, infoEl);
+    bodyInner.insertBefore(controlsEl, infoEl);
   } else {
     controlsEl.style.display = 'none';
   }
