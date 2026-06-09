@@ -6,7 +6,8 @@
 class Bubble {
   constructor(p, x, y) {
     this.p = p;
-    this.r = p.random(10, 50);
+    var scale = p.width < 400 ? 0.1 : 1;
+    this.r = p.random(10, 50) * scale;
     this.x = x !== undefined ? x : p.random(this.r, p.width - this.r);
     this.y = y !== undefined ? y : p.random(this.r, p.height - this.r);
     this.vx = p.random(-2, 2);
