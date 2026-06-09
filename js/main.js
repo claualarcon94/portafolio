@@ -1,13 +1,18 @@
 const projects = [
   {
-    id: 'snaaake',
-    title: 'Snaaake',
+    id: 'snake',
+    title: 'Snake',
     category: 'games',
     subtitle: 'Snake Game',
     description: 'Juego clásico de Snake con movimiento por grilla, crecimiento al comer comida y colisiones contra paredes o el propio cuerpo. Control por flechas del teclado.',
-    tags: ['Processing', 'Grid movement', 'Collision', 'Keyboard input'],
+    tags: ['p5.js', 'Grid movement', 'Collision', 'Keyboard input'],
     icon: 'S',
-    color: 'cat-games'
+    color: 'cat-games',
+    p5: true,
+    square: true,
+    controls: [
+      { key: '↑ ↓ ← →', action: 'Cambia dirección' }
+    ]
   },
   {
     id: 'resortes',
@@ -31,6 +36,7 @@ const projects = [
   },
   {
     id: 'steering',
+    date: '2026-06-05',
     title: 'Steering',
     category: 'physics',
     subtitle: 'Steering Behaviors',
@@ -47,6 +53,7 @@ const projects = [
   },
   {
     id: 'cubes_and_waves',
+    date: '2026-06-02',
     thumbFit: 'contain',
     title: 'Cubes and Waves',
     category: '3d',
@@ -63,6 +70,7 @@ const projects = [
   },
   {
     id: 'flow_field',
+    date: '2026-06-02',
     title: 'Flow Field',
     category: 'generative',
     subtitle: 'Perlin Flow Field',
@@ -77,6 +85,7 @@ const projects = [
   },
   {
     id: 'terrain',
+    date: '2026-06-05',
     title: 'Terrain',
     category: '3d',
     subtitle: '3D Perlin Terrain',
@@ -88,6 +97,7 @@ const projects = [
   },
   {
     id: 'colored_squares',
+    date: '2026-06-02',
     title: 'Colored Squares',
     category: 'generative',
     subtitle: 'Perlin Color Grid',
@@ -103,6 +113,7 @@ const projects = [
   },
   {
     id: 'fractal_tree',
+    date: '2026-06-02',
     thumbPos: 'bottom',
     title: 'Fractal Trees',
     category: 'generative',
@@ -138,6 +149,7 @@ const projects = [
   },
   {
     id: 'marching_squares',
+    date: '2026-06-02',
     title: 'Marching Squares',
     category: 'algorithms',
     subtitle: 'Contour Extraction',
@@ -157,6 +169,7 @@ const projects = [
   },
   {
     id: 'minesweeper',
+    date: '2026-06-05',
     title: 'Minesweeper',
     category: 'games',
     subtitle: 'Classic Minesweeper',
@@ -173,6 +186,7 @@ const projects = [
   },
   {
     id: 'raycasting',
+    date: '2026-06-02',
     title: 'Raycasting',
     category: 'algorithms',
     subtitle: '2D Raycasting',
@@ -184,6 +198,7 @@ const projects = [
   },
   {
     id: 'rendered_raycasting',
+    date: '2026-06-05',
     title: 'Rendered Raycasting',
     category: 'algorithms',
     subtitle: 'Wolfenstein 3D Engine',
@@ -199,6 +214,7 @@ const projects = [
   },
   {
     id: 'perceptron',
+    date: '2026-06-02',
     title: 'Perceptron',
     category: 'ml',
     subtitle: 'Animated Perceptron Training',
@@ -283,7 +299,10 @@ function getFilteredProjects(filter) {
   return projects.filter(function(p) {
     return p.p5 && (filter === 'all' || p.category === filter);
   }).sort(function(a, b) {
-    return a.title.localeCompare(b.title);
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return b.date.localeCompare(a.date);
   });
 }
 
@@ -458,6 +477,14 @@ function openModal(id) {
                     c.key.toLowerCase().indexOf('arrastrar') !== -1;
       if (isMouse) {
         html += '<div class="control-item"><kbd>' + c.key + '</kbd><span>' + c.action + '</span></div>';
+      } else if (c.key === '↑ ↓ ← →') {
+        html += '<div class="control-item arrow-control">';
+        html += '<div class="arrow-grid">';
+        html += '<button class="ctrl-keybtn" data-key="arrowup">↑</button>';
+        html += '<button class="ctrl-keybtn" data-key="arrowleft">←</button>';
+        html += '<button class="ctrl-keybtn" data-key="arrowdown">↓</button>';
+        html += '<button class="ctrl-keybtn" data-key="arrowright">→</button>';
+        html += '</div><span>' + c.action + '</span></div>';
       } else {
         var keys = c.key.split(/[\/\s,]+/).filter(function(k) { return k.length > 0; });
         var btns = keys.map(function(k) {
@@ -521,6 +548,8 @@ function openModal(id) {
         currentSketch = new p5(raycastingSketch, 'p5-canvas');
       } else if (id === 'rendered_raycasting') {
         currentSketch = new p5(renderedRaycastingSketch, 'p5-canvas');
+      } else if (id === 'snake') {
+        currentSketch = new p5(snakeSketch, 'p5-canvas');
       } else if (id === 'terrain') {
         currentSketch = new p5(terrainSketch, 'p5-canvas');
       } else if (id === 'steering') {

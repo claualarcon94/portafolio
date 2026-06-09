@@ -1272,6 +1272,21 @@ img { max-width: 100%; display: block; }
   line-height: 1.4;
 }
 
+.arrow-control {
+  align-items: flex-start;
+}
+.arrow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 36px);
+  grid-template-rows: 28px 28px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.arrow-grid .ctrl-keybtn:nth-child(1) { grid-column: 2; grid-row: 1; }
+.arrow-grid .ctrl-keybtn:nth-child(2) { grid-column: 1; grid-row: 2; }
+.arrow-grid .ctrl-keybtn:nth-child(3) { grid-column: 2; grid-row: 2; }
+.arrow-grid .ctrl-keybtn:nth-child(4) { grid-column: 3; grid-row: 2; }
+
 .slider-section {
   margin-top: 16px;
   padding-top: 16px;
