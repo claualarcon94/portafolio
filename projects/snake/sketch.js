@@ -6,8 +6,18 @@ var snakeSketch = function (p) {
   var go = false;
   var pendingDir = null;
   var gameOver = false;
-  var selectedOption = 0;
   var delayGO = 0;
+
+  function restartGame() {
+    snake = new Snake(p);
+    foods = [];
+    for (var i = 0; i < 10; i++) {
+      foods.push(new Food(p, CELL, snake));
+    }
+    go = false;
+    gameOver = false;
+    pendingDir = null;
+  }
 
   p.setup = function () {
     p.createCanvas(GRID * CELL, GRID * CELL);
@@ -68,42 +78,22 @@ var snakeSketch = function (p) {
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(64);
     p.text('Game Over', p.width / 2, p.height / 3);
-    p.textSize(32);
-    p.text('¿Reiniciar?', p.width / 2, p.height / 2);
     p.textSize(28);
-    p.fill(selectedOption === 0 ? 255 : 100);
-    p.text('Sí', p.width / 2 - 50, p.height * 2 / 3);
-    p.fill(selectedOption === 1 ? 255 : 100);
-    p.text('No', p.width / 2 + 50, p.height * 2 / 3);
+    p.text('Click para reiniciar', p.width / 2, p.height / 2);
     p.pop();
     }
   }
 };
 
-  p.keyPressed = function () {
-    if (gameOver) {
-      if (delayGO > 0) return;
-      if (p.keyCode === 37) { selectedOption = 0; return false; }
-      if (p.keyCode === 39) { selectedOption = 1; return false; }
-      if (p.keyCode === 13 || p.keyCode === 32) {
-        if (selectedOption === 1) {
-          closeModal();
-          return false;
-        }
-        snake = new Snake(p);
-        foods = [];
-        for (var i = 0; i < 10; i++) {
-          foods.push(new Food(p, CELL, snake));
-        }
-        go = true;
-        gameOver = false;
-        pendingDir = null;
-        selectedOption = 0;
-        return false;
-      }
-      return;
+  p.mousePressed = function () {
+    if (gameOver && delayGO <= 0) {
+      restartGame();
+      return false;
     }
-  if (snake.dirLocked) return false;
+  };
+
+  p.keyPressed = function () {
+    if (gameOver) return false;
   if (p.keyCode === 38) {
     if (!go) { go = true; snake.moveCounter = snake.moveDelay - 1; }
     else if (snake.speed.row !== 0) return false;
