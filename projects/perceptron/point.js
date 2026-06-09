@@ -36,11 +36,12 @@ class Point {
   display(guess) {
     var px = this.pixelX();
     var py = this.pixelY();
+    var scale = Math.min(1, this.p.width / 800);
     if (guess === -1) this.p.fill(0);
     else this.p.fill(255);
-    this.p.ellipse(px, py, 25, 25);
+    this.p.ellipse(px, py, 25 * scale, 25 * scale);
     if (guess === this.label) this.p.fill(0, 255, 0);
     else this.p.fill(255, 0, 0);
-    this.p.ellipse(px, py, 12, 12);
+    this.p.ellipse(px, py, 12 * scale, 12 * scale);
   }
 }
