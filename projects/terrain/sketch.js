@@ -14,9 +14,10 @@ var terrainSketch = function(p) {
     var alto = contenedor ? Math.round(ancho * 0.5) : 400;
     p.createCanvas(ancho, alto, p.WEBGL);
 
+    var ref = 800;
     scl = 20;
-    w = 1300;
-    h = 600;
+    w = 1300 * (ancho / ref);
+    h = 600 * (ancho / ref);
     cols = Math.floor(w / scl);
     rows = Math.floor(h / scl);
 
