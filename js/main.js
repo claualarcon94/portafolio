@@ -470,6 +470,9 @@ function openModal(id) {
 
   // Controles interactivos
   var controlsEl = document.getElementById('modalControls');
+  var bodyInner = document.querySelector('.modal-body-inner');
+  var infoEl = document.querySelector('.modal-info');
+  bodyInner.appendChild(controlsEl);
   if (p.controls && p.controls.length) {
     var html = '<h4 class="controls-title">⌨ Controles</h4><div class="controls-list">';
     for (var i = 0; i < p.controls.length; i++) {
@@ -501,13 +504,16 @@ function openModal(id) {
     for (var j = 0; j < keyBtns.length; j++) {
       keyBtns[j].addEventListener('click', function() {
         if (currentSketch) {
+          var map = { arrowup: 38, arrowdown: 40, arrowleft: 37, arrowright: 39, enter: 13, espacio: 32 };
           currentSketch.key = this.dataset.key;
+          currentSketch.keyCode = map[this.dataset.key] || 0;
           if (currentSketch.keyPressed) currentSketch.keyPressed();
         }
       });
     }
 
     controlsEl.style.display = '';
+    if (p.id === 'snake') bodyInner.insertBefore(controlsEl, infoEl);
   } else {
     controlsEl.style.display = 'none';
   }
