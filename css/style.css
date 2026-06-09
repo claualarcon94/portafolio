@@ -1069,6 +1069,7 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   box-shadow: var(--shadow-xl);
   animation: modalIn .3s ease;
+  position: relative;
 }
 
 @keyframes modalIn {
@@ -1117,6 +1118,7 @@ img { max-width: 100%; display: block; }
   position: absolute;
   top: 16px;
   right: 16px;
+  z-index: 10;
   width: 36px;
   height: 36px;
   border-radius: 50%;

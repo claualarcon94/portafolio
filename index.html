@@ -276,12 +276,12 @@
        en su tarjeta. El contenido se llena dinámica-
        mente desde js/main.js con la función openModal().
        ═══════════════════════════════════════════════ -->
-  <div class="modal-overlay" id="modalOverlay">
+   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
       <div class="modal-top" id="modalTopSection">
         <div class="modal-canvas-wrap" id="p5-canvas"></div>
         <span class="icon" id="modalIcon">M</span>
-        <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="modal-body">
         <div class="modal-body-inner">
