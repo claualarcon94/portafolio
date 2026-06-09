@@ -16,11 +16,6 @@ var snakeSketch = function (p) {
 
   p.draw = function () {
     p.background(155);
-    if (go && pendingDir) {
-      snake.speed.col = pendingDir.col;
-      snake.speed.row = pendingDir.row;
-      pendingDir = null;
-    }
     p.stroke(0);
     p.strokeWeight(1);
     for (var i = 0; i <= p.width; i += 20) {
@@ -28,6 +23,13 @@ var snakeSketch = function (p) {
       p.line(i, 0, i, p.height);
     }
     food.display();
+    snake.display(gameOver);
+    
+    if (go && pendingDir) {
+      snake.speed.col = pendingDir.col;
+      snake.speed.row = pendingDir.row;
+      pendingDir = null;
+    }
     
     if (go && !gameOver) {
       if (snake.update()) {
@@ -45,8 +47,6 @@ var snakeSketch = function (p) {
         }
       }
     }
-  
-  snake.display(gameOver);
   if (gameOver) {
     if (delayGO > 0) { delayGO--; } else {
     p.push();

@@ -54,17 +54,49 @@ Snake.prototype.display = function(dead) {
   for (var i = 0; i < this.body.length; i++) {
     p.rect(this.body[i].col * 20, this.body[i].row * 20, 20, 20);
   }
+  var hx = this.body[0].col * 20;
+  var hy = this.body[0].row * 20;
+  var dc = this.body[0].col - this.body[1].col;
+  var dr = this.body[0].row - this.body[1].row;
   if (dead) {
     p.stroke(255);
     p.strokeWeight(2);
-    var cx = this.body[0].col * 20 + 10;
-    var cy = this.body[0].row * 20 + 10;
-    p.line(cx - 3, cy - 3, cx + 3, cy + 3);
-    p.line(cx + 3, cy - 3, cx - 3, cy + 3);
+    p.noFill();
+    if (dc === 1) {
+      drawX(hx + 5, hy + 5);
+      drawX(hx + 5, hy + 14);
+    } else if (dc === -1) {
+      drawX(hx + 14, hy + 5);
+      drawX(hx + 14, hy + 14);
+    } else if (dr === -1) {
+      drawX(hx + 5, hy + 14);
+      drawX(hx + 14, hy + 14);
+    } else if (dr === 1) {
+      drawX(hx + 5, hy + 5);
+      drawX(hx + 14, hy + 5);
+    }
     p.noStroke();
   } else {
     p.ellipseMode(p.CENTER);
     p.fill(255);
-    p.ellipse(this.body[0].col * 20 + 5, this.body[0].row * 20 + 5, 6, 6);
+    p.noStroke();
+    if (dc === 1) {
+      p.ellipse(hx + 5, hy + 5, 6, 6);
+      p.ellipse(hx + 5, hy + 14, 6, 6);
+    } else if (dc === -1) {
+      p.ellipse(hx + 14, hy + 5, 6, 6);
+      p.ellipse(hx + 14, hy + 14, 6, 6);
+    } else if (dr === -1) {
+      p.ellipse(hx + 5, hy + 14, 6, 6);
+      p.ellipse(hx + 14, hy + 14, 6, 6);
+    } else if (dr === 1) {
+      p.ellipse(hx + 5, hy + 5, 6, 6);
+      p.ellipse(hx + 14, hy + 5, 6, 6);
+    }
+  }
+
+  function drawX(x, y) {
+    p.line(x - 3, y - 3, x + 3, y + 3);
+    p.line(x + 3, y - 3, x - 3, y + 3);
   }
 };
