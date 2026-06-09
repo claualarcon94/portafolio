@@ -4,9 +4,11 @@ function Snake(p) {
   this.speed = {col: 1, row: 0};
   this.moveCounter = 0;
   this.dirLocked = false;
-  this.moveDelay = 30;
+  this.moveDelay = 10;
+  var startCol = Math.floor(GRID * 0.55);
+  var midRow = Math.floor(GRID * 0.5);
   for (var i = 0; i < 10; i++) {
-    this.body.push({col: 21 - i, row: 20});
+    this.body.push({col: startCol - i, row: midRow});
   }
 }
 
@@ -38,7 +40,7 @@ Snake.prototype.crecer = function() {
 Snake.prototype.colisionPared = function() {
   var nc = this.body[0].col + this.speed.col;
   var nr = this.body[0].row + this.speed.row;
-  return nc < 0 || nc > 39 || nr < 0 || nr > 39;
+  return nc < 0 || nc >= GRID || nr < 0 || nr >= GRID;
 };
 
 Snake.prototype.colisionCuerpo = function() {
@@ -51,11 +53,14 @@ Snake.prototype.colisionCuerpo = function() {
 Snake.prototype.display = function(dead) {
   var p = this.p;
   p.fill(0, 50, 0);
+  var eye = Math.min(6, Math.max(3, Math.floor(CELL * 0.3)));
+  var a = CELL / 4;
+  var b = CELL - eye;
   for (var i = 0; i < this.body.length; i++) {
-    p.rect(this.body[i].col * 20, this.body[i].row * 20, 20, 20);
+    p.rect(this.body[i].col * CELL, this.body[i].row * CELL, CELL, CELL);
   }
-  var hx = this.body[0].col * 20;
-  var hy = this.body[0].row * 20;
+  var hx = this.body[0].col * CELL;
+  var hy = this.body[0].row * CELL;
   var dc = this.body[0].col - this.body[1].col;
   var dr = this.body[0].row - this.body[1].row;
   if (dead) {
@@ -63,17 +68,17 @@ Snake.prototype.display = function(dead) {
     p.strokeWeight(2);
     p.noFill();
     if (dc === 1) {
-      drawX(hx + 5, hy + 5);
-      drawX(hx + 5, hy + 14);
+      drawX(hx + a, hy + a);
+      drawX(hx + a, hy + b);
     } else if (dc === -1) {
-      drawX(hx + 14, hy + 5);
-      drawX(hx + 14, hy + 14);
+      drawX(hx + b, hy + a);
+      drawX(hx + b, hy + b);
     } else if (dr === -1) {
-      drawX(hx + 5, hy + 14);
-      drawX(hx + 14, hy + 14);
+      drawX(hx + a, hy + b);
+      drawX(hx + b, hy + b);
     } else if (dr === 1) {
-      drawX(hx + 5, hy + 5);
-      drawX(hx + 14, hy + 5);
+      drawX(hx + a, hy + a);
+      drawX(hx + b, hy + a);
     }
     p.noStroke();
   } else {
@@ -81,22 +86,23 @@ Snake.prototype.display = function(dead) {
     p.fill(255);
     p.noStroke();
     if (dc === 1) {
-      p.ellipse(hx + 5, hy + 5, 6, 6);
-      p.ellipse(hx + 5, hy + 14, 6, 6);
+      p.ellipse(hx + a, hy + a, eye, eye);
+      p.ellipse(hx + a, hy + b, eye, eye);
     } else if (dc === -1) {
-      p.ellipse(hx + 14, hy + 5, 6, 6);
-      p.ellipse(hx + 14, hy + 14, 6, 6);
+      p.ellipse(hx + b, hy + a, eye, eye);
+      p.ellipse(hx + b, hy + b, eye, eye);
     } else if (dr === -1) {
-      p.ellipse(hx + 5, hy + 14, 6, 6);
-      p.ellipse(hx + 14, hy + 14, 6, 6);
+      p.ellipse(hx + a, hy + b, eye, eye);
+      p.ellipse(hx + b, hy + b, eye, eye);
     } else if (dr === 1) {
-      p.ellipse(hx + 5, hy + 5, 6, 6);
-      p.ellipse(hx + 14, hy + 5, 6, 6);
+      p.ellipse(hx + a, hy + a, eye, eye);
+      p.ellipse(hx + b, hy + a, eye, eye);
     }
   }
 
   function drawX(x, y) {
-    p.line(x - 3, y - 3, x + 3, y + 3);
-    p.line(x + 3, y - 3, x - 3, y + 3);
+    var r = eye / 2;
+    p.line(x - r, y - r, x + r, y + r);
+    p.line(x + r, y - r, x - r, y + r);
   }
 };

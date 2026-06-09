@@ -1,5 +1,8 @@
+var CELL = 40;
+var GRID = 20;
+
 var snakeSketch = function (p) {
-  var snake, food;
+  var snake, foods;
   var go = false;
   var pendingDir = null;
   var gameOver = false;
@@ -7,22 +10,25 @@ var snakeSketch = function (p) {
   var delayGO = 0;
 
   p.setup = function () {
-    p.createCanvas(800, 800);
+    p.createCanvas(GRID * CELL, GRID * CELL);
     p.frameRate(60);
     p.background(50);
     snake = new Snake(p);
-    food = new Food(p, 20, snake);
+    foods = [];
+    for (var i = 0; i < 10; i++) {
+      foods.push(new Food(p, CELL, snake));
+    }
   };
 
   p.draw = function () {
     p.background(155);
     p.stroke(0);
     p.strokeWeight(1);
-    for (var i = 0; i <= p.width; i += 20) {
+    for (var i = 0; i <= p.width; i += CELL) {
       p.line(0, i, p.width, i);
       p.line(i, 0, i, p.height);
     }
-    food.display();
+    for (var i = 0; i < foods.length; i++) foods[i].display();
     snake.display(gameOver);
     
     if (go && pendingDir) {
@@ -41,9 +47,14 @@ var snakeSketch = function (p) {
           gameOver = true;
           delayGO = 30;
           pendingDir = null;
-        } else if (snake.body[0].col === food.col && snake.body[0].row === food.row) {
-          snake.crecer();
-          food.respawn(snake);
+        } else {
+          for (var j = 0; j < foods.length; j++) {
+            if (snake.body[0].col === foods[j].col && snake.body[0].row === foods[j].row) {
+              snake.crecer();
+              foods[j].respawn(snake);
+              break;
+            }
+          }
         }
       }
     }
@@ -80,7 +91,10 @@ var snakeSketch = function (p) {
           return false;
         }
         snake = new Snake(p);
-        food = new Food(p, 20, snake);
+        foods = [];
+        for (var i = 0; i < 10; i++) {
+          foods.push(new Food(p, CELL, snake));
+        }
         go = true;
         gameOver = false;
         pendingDir = null;
