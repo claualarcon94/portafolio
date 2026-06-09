@@ -179,6 +179,7 @@ const projects = [
     icon: 'M',
     color: 'cat-games',
     p5: true,
+    square: true,
     controls: [
       { key: 'Click izq', action: 'Destapa casilla' },
       { key: 'Click der', action: 'Bandera / ?' },
