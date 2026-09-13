@@ -230,6 +230,16 @@ const projects = [
     ]
   },
   {
+    id: 'chernobyl',
+    title: 'Chernobyl',
+    category: 'simulations',
+    subtitle: 'Simulación',
+    description: 'Simulación de la fusión del núcleo del reactor RBMK.',
+    tags: ['Processing', 'Physics simulation', 'Nuclear', 'RBMK'],
+    icon: 'Ch',
+    color: 'cat-physics'
+  },
+  {
     id: 'firma',
     title: 'Firma',
     category: 'tools',
